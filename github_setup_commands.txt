@@ -1,0 +1,18 @@
+# GitHub Repository Setup Commands
+
+# Replace YOUR_USERNAME with your actual GitHub username in the commands below
+
+# Add the GitHub repository as a remote named "origin"
+git remote add origin https://github.com/YOUR_USERNAME/dnd-ai-dm.git
+
+# Verify that the remote was added correctly
+git remote -v
+
+# Push your code to GitHub
+git push -u origin main
+
+# If you're using the 'master' branch instead of 'main', use this command instead:
+# git push -u origin master
+
+# After running these commands, your code will be available on GitHub at:
+# https://github.com/YOUR_USERNAME/dnd-ai-dm 
