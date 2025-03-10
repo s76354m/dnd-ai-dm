@@ -1,8 +1,6 @@
 /**
- * Dice Rolling Utilities
- * 
- * Comprehensive utility functions for rolling dice with validation and error handling.
- * Supports standard D&D dice notation parsing and rolling.
+ * Dice rolling utilities for D&D mechanics
+ * Provides functions for rolling dice and calculating probabilities
  */
 
 /**
@@ -39,7 +37,7 @@ export class DiceRollError extends Error {
 }
 
 /**
- * Configuration options for dice rolling
+ * Options for dice rolling
  */
 export interface DiceRollOptions {
   /** Maximum number of dice allowed in a single roll (to prevent abuse) */
@@ -50,75 +48,66 @@ export interface DiceRollOptions {
   debug?: boolean;
 }
 
-// Default limits to prevent abuse or extreme calculations
-const DEFAULT_MAX_DICE_COUNT = 100;
-const DEFAULT_MAX_DIE_SIZE = 1000;
+/**
+ * Default options for dice rolling
+ */
+const DEFAULT_DICE_OPTIONS: DiceRollOptions = {
+  maxDiceCount: 100,
+  maxDieSize: 1000,
+  debug: false
+};
 
 /**
- * Roll a single die of the specified size
- * 
+ * Roll a single die with the specified number of sides
  * @param sides Number of sides on the die
- * @returns A random number between 1 and sides (inclusive)
- * @throws {DiceRollError} If sides is not a positive integer
+ * @returns Random number between 1 and sides
  */
 export function rollDie(sides: number): number {
-  // Validate sides
-  if (!Number.isInteger(sides)) {
-    throw new DiceRollError(`Die size must be an integer, got: ${sides}`);
+  if (sides < 1) {
+    throw new DiceRollError(`Invalid die size: ${sides}. Must be at least 1.`);
   }
   
-  if (sides <= 0) {
-    throw new DiceRollError(`Die size must be positive, got: ${sides}`);
+  if (!Number.isInteger(sides)) {
+    throw new DiceRollError(`Invalid die size: ${sides}. Must be an integer.`);
   }
   
   return Math.floor(Math.random() * sides) + 1;
 }
 
 /**
- * Roll multiple dice of the same size
- * 
+ * Roll multiple dice of the same type
  * @param count Number of dice to roll
  * @param sides Number of sides on each die
- * @param options Configuration options
- * @returns Array of roll results
- * @throws {DiceRollError} If parameters are invalid
+ * @param options Options for dice rolling
+ * @returns Array of dice roll results
  */
 export function rollMultipleDice(
   count: number, 
   sides: number, 
   options: DiceRollOptions = {}
 ): number[] {
-  // Get limits from options or use defaults
-  const maxDiceCount = options.maxDiceCount ?? DEFAULT_MAX_DICE_COUNT;
-  const maxDieSize = options.maxDieSize ?? DEFAULT_MAX_DIE_SIZE;
+  const opts = { ...DEFAULT_DICE_OPTIONS, ...options };
   
-  // Validate count
+  if (count < 1) {
+    throw new DiceRollError(`Invalid dice count: ${count}. Must be at least 1.`);
+  }
+  
   if (!Number.isInteger(count)) {
-    throw new DiceRollError(`Dice count must be an integer, got: ${count}`);
+    throw new DiceRollError(`Invalid dice count: ${count}. Must be an integer.`);
   }
   
-  if (count <= 0) {
-    throw new DiceRollError(`Dice count must be positive, got: ${count}`);
+  if (count > (opts.maxDiceCount || DEFAULT_DICE_OPTIONS.maxDiceCount!)) {
+    throw new DiceRollError(
+      `Too many dice: ${count}. Maximum allowed is ${opts.maxDiceCount || DEFAULT_DICE_OPTIONS.maxDiceCount!}.`
+    );
   }
   
-  if (count > maxDiceCount) {
-    throw new DiceRollError(`Exceeded maximum allowed dice count (${maxDiceCount}), got: ${count}`);
+  if (sides > (opts.maxDieSize || DEFAULT_DICE_OPTIONS.maxDieSize!)) {
+    throw new DiceRollError(
+      `Die size too large: ${sides}. Maximum allowed is ${opts.maxDieSize || DEFAULT_DICE_OPTIONS.maxDieSize!}.`
+    );
   }
   
-  // Validate sides
-  if (!Number.isInteger(sides)) {
-    throw new DiceRollError(`Die size must be an integer, got: ${sides}`);
-  }
-  
-  if (sides <= 0) {
-    throw new DiceRollError(`Die size must be positive, got: ${sides}`);
-  }
-  
-  if (sides > maxDieSize) {
-    throw new DiceRollError(`Exceeded maximum allowed die size (${maxDieSize}), got: ${sides}`);
-  }
-  
-  // Roll the dice
   const results: number[] = [];
   
   for (let i = 0; i < count; i++) {
@@ -129,86 +118,66 @@ export function rollMultipleDice(
 }
 
 /**
- * Parse a dice notation string and roll the dice
- * 
- * @param notation The dice notation (e.g., "2d6+3", "4d8-2", "d20")
- * @param options Configuration options
- * @returns The result of the roll
- * @throws {DiceRollError} If the notation is invalid or parameters exceed limits
+ * Roll dice using standard D&D notation (e.g., "2d6+3")
+ * @param notation Dice notation string (e.g., "2d6+3", "1d20-2", "3d8")
+ * @param options Options for dice rolling
+ * @returns Result of the dice roll
  */
 export function rollDice(notation: string, options: DiceRollOptions = {}): DiceRollResult {
-  if (!notation || typeof notation !== 'string') {
-    throw new DiceRollError(`Invalid dice notation: ${notation}`);
+  const opts = { ...DEFAULT_DICE_OPTIONS, ...options };
+  const debug: string[] = [];
+  
+  if (opts.debug) {
+    debug.push(`Rolling: ${notation}`);
   }
   
-  const debug: string[] = options.debug ? [] : undefined as unknown as string[];
-  if (debug) debug.push(`Processing dice notation: ${notation}`);
-  
-  // Support for more complex dice notation: NdM+K or NdM-K or just dM (for 1dM)
-  const diceRegex = /^(\d+)?d(\d+)(?:([-+])(\d+))?$/i;
+  // Regular expression to parse dice notation
+  // Matches patterns like "2d6", "1d20+3", "3d8-2", etc.
+  const diceRegex = /^(\d+)d(\d+)(?:([+-])(\d+))?$/;
   const match = notation.toLowerCase().match(diceRegex);
   
   if (!match) {
-    throw new DiceRollError(`Invalid dice notation format: ${notation}. Expected format like '2d6+3' or 'd20'.`);
+    throw new DiceRollError(`Invalid dice notation: ${notation}. Expected format like "2d6+3".`);
   }
   
-  // Parse components
-  const numDice = match[1] ? parseInt(match[1]) : 1; // Default to 1 if not specified
-  const dieSize = parseInt(match[2]);
-  const modifierSign = match[3] || '+'; // Default to + if not specified
-  const modifierValue = match[4] ? parseInt(match[4]) : 0;
-  const modifier = modifierSign === '+' ? modifierValue : -modifierValue;
+  const numDice = parseInt(match[1], 10);
+  const dieSize = parseInt(match[2], 10);
+  const hasModifier = match[3] !== undefined;
+  const modifierSign = match[3] === '+' ? 1 : -1;
+  const modifierValue = hasModifier ? parseInt(match[4], 10) : 0;
+  const modifier = hasModifier ? modifierSign * modifierValue : 0;
   
-  if (debug) {
-    debug.push(`Parsed components: ${numDice} dice with ${dieSize} sides, modifier ${modifierSign}${modifierValue}`);
+  if (opts.debug) {
+    debug.push(`Parsed: ${numDice} dice with ${dieSize} sides, modifier: ${modifier}`);
   }
   
-  try {
-    // Roll the dice
-    const rolls = rollMultipleDice(numDice, dieSize, options);
-    
-    if (debug) {
-      debug.push(`Roll results: [${rolls.join(', ')}]`);
-      debug.push(`Modifier: ${modifier}`);
-    }
-    
-    // Calculate the total
-    const rollSum = rolls.reduce((sum, roll) => sum + roll, 0);
-    const total = rollSum + modifier;
-    
-    if (debug) {
-      debug.push(`Roll sum: ${rollSum}`);
-      debug.push(`Total after modifier: ${total}`);
-    }
-    
-    return {
-      total,
-      rolls,
-      modifier,
-      meta: {
-        notation,
-        numDice,
-        dieSize,
-        debug
-      }
-    };
-  } catch (error) {
-    if (error instanceof DiceRollError) {
-      throw error;
-    }
-    
-    // Handle unexpected errors
-    throw new DiceRollError(`Error rolling dice: ${(error as Error).message}`);
+  const rolls = rollMultipleDice(numDice, dieSize, opts);
+  const rollSum = rolls.reduce((sum, roll) => sum + roll, 0);
+  const total = rollSum + modifier;
+  
+  if (opts.debug) {
+    debug.push(`Rolls: [${rolls.join(', ')}], sum: ${rollSum}, total with modifier: ${total}`);
   }
+  
+  return {
+    total,
+    rolls,
+    modifier,
+    meta: {
+      notation,
+      numDice,
+      dieSize,
+      debug: opts.debug ? debug : undefined
+    }
+  };
 }
 
 /**
- * Roll ability check or saving throw
- * 
- * @param abilityModifier The ability modifier for the check
- * @param proficiencyBonus Optional proficiency bonus
- * @param options Additional options for the roll
- * @returns Result of the ability check or saving throw
+ * Roll a d20 check with advantage/disadvantage and modifiers
+ * @param abilityModifier Ability modifier to add to the roll
+ * @param proficiencyBonus Proficiency bonus to add to the roll
+ * @param options Options for the roll
+ * @returns Result of the d20 check
  */
 export function rollD20Check(
   abilityModifier: number,
@@ -229,104 +198,115 @@ export function rollD20Check(
   rolls?: number[];
   meta?: { debug?: string[] };
 } {
-  const { advantage = false, disadvantage = false, dc = 10, debug = false } = options;
-  const critical = options.critical || { success: 20, failure: 1 };
+  const debug: string[] = [];
+  const modifier = abilityModifier + proficiencyBonus;
   
-  const debugInfo: string[] = options.debug ? [] : undefined as unknown as string[];
-  
-  if (debugInfo) {
-    debugInfo.push(`Rolling D20 check with ability modifier ${abilityModifier}, proficiency ${proficiencyBonus}`);
-    if (advantage) debugInfo.push('Rolling with advantage');
-    if (disadvantage) debugInfo.push('Rolling with disadvantage');
+  if (options.debug) {
+    debug.push(`Rolling d20 check with modifier: ${modifier}`);
+    debug.push(`Ability modifier: ${abilityModifier}, Proficiency bonus: ${proficiencyBonus}`);
+    
+    if (options.advantage) {
+      debug.push('Rolling with advantage');
+    }
+    
+    if (options.disadvantage) {
+      debug.push('Rolling with disadvantage');
+    }
+    
+    if (options.dc !== undefined) {
+      debug.push(`DC: ${options.dc}`);
+    }
   }
   
-  // Calculate total modifier
-  const totalModifier = abilityModifier + proficiencyBonus;
+  // Handle advantage and disadvantage canceling each other out
+  const hasAdvantage = options.advantage && !options.disadvantage;
+  const hasDisadvantage = options.disadvantage && !options.advantage;
   
-  // Roll the d20, with advantage/disadvantage if applicable
+  // Roll twice if advantage or disadvantage
+  const rolls = [rollDie(20)];
+  
+  if (hasAdvantage || hasDisadvantage) {
+    rolls.push(rollDie(20));
+  }
+  
+  if (options.debug) {
+    debug.push(`Rolls: [${rolls.join(', ')}]`);
+  }
+  
+  // Determine which roll to use
   let roll: number;
-  let rolls: number[] = [];
   
-  if (advantage && !disadvantage) {
-    // Roll twice and take the higher value
-    const roll1 = rollDie(20);
-    const roll2 = rollDie(20);
-    rolls = [roll1, roll2];
-    roll = Math.max(roll1, roll2);
-    
-    if (debugInfo) {
-      debugInfo.push(`Advantage rolls: ${roll1}, ${roll2} (using ${roll})`);
+  if (hasAdvantage) {
+    roll = Math.max(...rolls);
+    if (options.debug) {
+      debug.push(`Using higher roll with advantage: ${roll}`);
     }
-  } else if (disadvantage && !advantage) {
-    // Roll twice and take the lower value
-    const roll1 = rollDie(20);
-    const roll2 = rollDie(20);
-    rolls = [roll1, roll2];
-    roll = Math.min(roll1, roll2);
-    
-    if (debugInfo) {
-      debugInfo.push(`Disadvantage rolls: ${roll1}, ${roll2} (using ${roll})`);
+  } else if (hasDisadvantage) {
+    roll = Math.min(...rolls);
+    if (options.debug) {
+      debug.push(`Using lower roll with disadvantage: ${roll}`);
     }
   } else {
-    // Regular roll
-    roll = rollDie(20);
-    rolls = [roll];
-    
-    if (debugInfo) {
-      debugInfo.push(`Standard roll: ${roll}`);
+    roll = rolls[0];
+  }
+  
+  const total = roll + modifier;
+  
+  if (options.debug) {
+    debug.push(`Total: ${roll} + ${modifier} = ${total}`);
+  }
+  
+  // Determine success/failure
+  let success = true;
+  if (options.dc !== undefined) {
+    success = total >= options.dc;
+    if (options.debug) {
+      debug.push(`Check ${success ? 'succeeds' : 'fails'} against DC ${options.dc}`);
     }
   }
   
-  // Calculate the total
-  const total = roll + totalModifier;
+  // Handle critical success/failure
+  let critical: 'success' | 'failure' | null = null;
+  const critSuccess = options.critical?.success ?? 20;
+  const critFailure = options.critical?.failure ?? 1;
   
-  if (debugInfo) {
-    debugInfo.push(`Total modifier: ${totalModifier}`);
-    debugInfo.push(`Total roll: ${roll} + ${totalModifier} = ${total}`);
-    debugInfo.push(`DC: ${dc}, Success: ${total >= dc}`);
-  }
-  
-  // Check for critical success or failure
-  let criticalResult: 'success' | 'failure' | null = null;
-  if (roll >= critical.success) {
-    criticalResult = 'success';
-    if (debugInfo) debugInfo.push('Critical success!');
-  } else if (roll <= critical.failure) {
-    criticalResult = 'failure';
-    if (debugInfo) debugInfo.push('Critical failure!');
+  if (roll >= critSuccess) {
+    critical = 'success';
+    if (options.debug) {
+      debug.push(`Critical success! (${roll} >= ${critSuccess})`);
+    }
+  } else if (roll <= critFailure) {
+    critical = 'failure';
+    if (options.debug) {
+      debug.push(`Critical failure! (${roll} <= ${critFailure})`);
+    }
   }
   
   return {
     roll,
     total,
-    modifier: totalModifier,
-    success: total >= dc,
-    critical: criticalResult,
-    rolls: rolls.length > 1 ? rolls : undefined,
-    meta: debug ? { debug: debugInfo } : undefined
+    modifier,
+    success,
+    critical,
+    rolls: options.debug ? rolls : undefined,
+    meta: options.debug ? { debug } : undefined
   };
 }
 
 /**
- * Checks if a string is valid dice notation
- * 
- * @param notation String to check
- * @returns Whether the string is valid dice notation
+ * Check if a string is valid dice notation
+ * @param notation Dice notation to check
+ * @returns Whether the notation is valid
  */
 export function isValidDiceNotation(notation: string): boolean {
-  if (!notation || typeof notation !== 'string') {
-    return false;
-  }
-  
-  const diceRegex = /^(\d+)?d(\d+)(?:([-+])(\d+))?$/i;
+  const diceRegex = /^(\d+)d(\d+)(?:([+-])(\d+))?$/;
   return diceRegex.test(notation.toLowerCase());
 }
 
 /**
  * Calculate probabilities for a dice roll
- * 
- * @param notation Dice notation
- * @returns Probability information
+ * @param notation Dice notation to analyze
+ * @returns Probability statistics
  */
 export function calculateDiceProbabilities(notation: string): {
   min: number;
@@ -335,40 +315,110 @@ export function calculateDiceProbabilities(notation: string): {
   median: number;
   distribution?: Map<number, number>;
 } {
-  try {
-    // Parse the notation
-    const diceRegex = /^(\d+)?d(\d+)(?:([-+])(\d+))?$/i;
-    const match = notation.toLowerCase().match(diceRegex);
+  if (!isValidDiceNotation(notation)) {
+    throw new DiceRollError(`Invalid dice notation: ${notation}. Expected format like "2d6+3".`);
+  }
+  
+  const diceRegex = /^(\d+)d(\d+)(?:([+-])(\d+))?$/;
+  const match = notation.toLowerCase().match(diceRegex)!;
+  
+  const numDice = parseInt(match[1], 10);
+  const dieSize = parseInt(match[2], 10);
+  const hasModifier = match[3] !== undefined;
+  const modifierSign = match[3] === '+' ? 1 : -1;
+  const modifierValue = hasModifier ? parseInt(match[4], 10) : 0;
+  const modifier = hasModifier ? modifierSign * modifierValue : 0;
+  
+  // Calculate min, max, and mean
+  const min = numDice + modifier; // Minimum is all 1s
+  const max = numDice * dieSize + modifier; // Maximum is all max values
+  const mean = numDice * ((dieSize + 1) / 2) + modifier; // Mean of a die is (sides+1)/2
+  
+  // For small dice pools, calculate the full distribution
+  // For larger pools, this becomes computationally expensive
+  let distribution: Map<number, number> | undefined;
+  let median = 0;
+  
+  if (numDice <= 10 && dieSize <= 20) {
+    distribution = calculateExactDistribution(numDice, dieSize, modifier);
     
-    if (!match) {
-      throw new DiceRollError(`Invalid dice notation: ${notation}`);
+    // Calculate median from distribution
+    const sortedOutcomes = Array.from(distribution.entries())
+      .sort(([a], [b]) => a - b);
+    
+    const totalCombinations = Array.from(distribution.values())
+      .reduce((sum, count) => sum + count, 0);
+    
+    let cumulativeCount = 0;
+    for (const [outcome, count] of sortedOutcomes) {
+      cumulativeCount += count;
+      if (cumulativeCount >= totalCombinations / 2) {
+        median = outcome;
+        break;
+      }
+    }
+  } else {
+    // For large dice pools, approximate the median as the mean
+    // This is accurate for large pools due to the central limit theorem
+    median = Math.round(mean);
+  }
+  
+  return {
+    min,
+    max,
+    mean,
+    median,
+    distribution
+  };
+}
+
+/**
+ * Calculate the exact probability distribution for a dice pool
+ * @param numDice Number of dice
+ * @param dieSize Number of sides per die
+ * @param modifier Static modifier to add
+ * @returns Map of outcomes to number of combinations
+ */
+function calculateExactDistribution(
+  numDice: number,
+  dieSize: number,
+  modifier: number
+): Map<number, number> {
+  // Start with a single die
+  let distribution = new Map<number, number>();
+  
+  // Initialize with a single die
+  for (let i = 1; i <= dieSize; i++) {
+    distribution.set(i, 1);
+  }
+  
+  // Add additional dice
+  for (let d = 1; d < numDice; d++) {
+    const newDistribution = new Map<number, number>();
+    
+    // For each existing outcome
+    for (const [outcome, count] of distribution.entries()) {
+      // Add each possible roll of the new die
+      for (let i = 1; i <= dieSize; i++) {
+        const newOutcome = outcome + i;
+        const newCount = (newDistribution.get(newOutcome) || 0) + count;
+        newDistribution.set(newOutcome, newCount);
+      }
     }
     
-    const numDice = match[1] ? parseInt(match[1]) : 1;
-    const dieSize = parseInt(match[2]);
-    const modifierSign = match[3] || '+';
-    const modifierValue = match[4] ? parseInt(match[4]) : 0;
-    const modifier = modifierSign === '+' ? modifierValue : -modifierValue;
-    
-    // Calculate min and max
-    const min = numDice + modifier; // Minimum is all 1s
-    const max = numDice * dieSize + modifier; // Maximum is all maximum values
-    
-    // Calculate mean
-    // For a fair die of size n, the mean is (n+1)/2
-    const meanPerDie = (dieSize + 1) / 2;
-    const mean = numDice * meanPerDie + modifier;
-    
-    // Calculate median (approximation for multiple dice)
-    const median = Math.floor((min + max) / 2);
-    
-    return {
-      min,
-      max,
-      mean,
-      median
-    };
-  } catch (error) {
-    throw new DiceRollError(`Error calculating probabilities: ${(error as Error).message}`);
+    distribution = newDistribution;
   }
+  
+  // Apply modifier
+  if (modifier !== 0) {
+    const modifiedDistribution = new Map<number, number>();
+    
+    for (const [outcome, count] of distribution.entries()) {
+      modifiedDistribution.set(outcome + modifier, count);
+    }
+    
+    distribution = modifiedDistribution;
+  }
+  
+  return distribution;
 } 

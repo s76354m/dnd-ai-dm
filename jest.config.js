@@ -1,18 +1,19 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  roots: ['<rootDir>/src/', '<rootDir>/test/'],
+  testMatch: ['**/*.test.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts'
+  ],
+  coverageDirectory: 'coverage',
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: 'tsconfig.test.json',
-    }]
+      tsconfig: 'tsconfig.json',
+    }],
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
-  moduleNameMapper: {
-    '^src/(.*)$': '<rootDir>/src/$1'
-  },
-  setupFilesAfterEnv: ['<rootDir>/src/tests/test-setup.ts'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
-  clearMocks: true,
-  collectCoverage: false
+  verbose: true
 }; 

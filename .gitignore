@@ -2,6 +2,27 @@
 node_modules/
 jspm_packages/
 
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Jest
+jest_html_reporters_attachment/
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -11,25 +32,6 @@ jspm_packages/
 # Optional eslint cache
 .eslintcache
 
-# Build output
-dist/
-build/
-out/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-logs
-*.log
-
 # Editor directories and files
 .idea/
 .vscode/
@@ -38,15 +40,14 @@ logs
 *.njsproj
 *.sln
 *.sw?
+
+# OS specific
 .DS_Store
+Thumbs.db
 
-# Test coverage
-coverage/
+# Debug files
+debug.log
 
-# Temporary files
-tmp/
-temp/
-
-# Save files (specific to this project)
-test-saves/ 
-node_modules
+# Save files
+saves/
+test-saves/

@@ -5,10 +5,14 @@
  * It initializes core systems and starts the game loop.
  */
 
-import * as readline from 'readline';
-import * as path from 'path';
+import dotenv from 'dotenv';
+import path from 'path';
+import { createInterface } from 'readline';
 import * as fs from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
+
+// Load environment variables
+dotenv.config();
 
 // Core system imports
 import { Character } from './core/interfaces/character';
@@ -41,7 +45,7 @@ import { CharacterCreator } from './character/creation/creator';
 import { saveManager } from './persistence/save-manager';
 
 // Initialize the readline interface for user input
-const rl = readline.createInterface({
+const rl = createInterface({
   input: process.stdin,
   output: process.stdout
 });
@@ -597,83 +601,71 @@ function getUserInput(prompt: string): Promise<string> {
  * Main application entry point
  */
 export async function main(): Promise<void> {
-  console.log("Welcome to DnD-AI-DM!");
-  console.log("Loading game...");
-  
+  console.log('=================================');
+  console.log('| DnD-AI-DM - AI Dungeon Master |');
+  console.log('=================================');
+  console.log('Starting application...');
+
   try {
-    // Initialize the save manager
-    await saveManager.initialize(path.join(process.cwd(), 'saves'));
+    // Initialize services (placeholder for future implementation)
+    console.log('Initializing game systems...');
     
-    // Create a new game state
-    const gameState = gameStateManager.createNewGameState();
+    // Create readline interface for user input
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    // Simple prompt function
+    const prompt = (query: string): Promise<string> => {
+      return new Promise((resolve) => {
+        rl.question(query, (answer) => {
+          resolve(answer);
+        });
+      });
+    };
+
+    // Main game loop (placeholder)
+    console.log('\nWelcome to DnD-AI-DM!');
+    console.log('This is a placeholder for the full application.');
+    console.log('The complete implementation will include:');
+    console.log('- Character creation and management');
+    console.log('- AI-powered narrative generation');
+    console.log('- Combat system with D&D 5e rules');
+    console.log('- World exploration and quest management');
+    console.log('- Spell and item systems');
     
-    // Create a command processor
-    const commandProcessor = new CommandProcessor(gameState);
-    
-    // Main game loop
+    // Simple command loop
     let running = true;
-    
-    // Display initial game state
-    console.log("\n" + gameState.currentLocation.description);
-    
     while (running) {
-      // Get user input
-      const input = await getUserInput("> ");
+      const input = await prompt('\n> ');
       
-      // Process the command
-      const result = await commandProcessor.processCommand(input);
-      
-      // Display the result
-      console.log("\n" + result.message);
-      
-      // Check if we should exit
-      if (result.shouldExit) {
+      if (input.toLowerCase() === 'exit') {
         running = false;
-      }
-      
-      // Check if we should save
-      if (result.shouldSave) {
-        try {
-          const saveResult = await saveManager.saveGame(gameState);
-          console.log(saveResult.message);
-        } catch (error) {
-          console.error("Error saving game:", error);
-        }
-      }
-      
-      // Check if we have state changes (from loading a save)
-      if (result.stateChanges) {
-        // Update the game state
-        Object.assign(gameState, result.stateChanges);
-        console.log("Game loaded successfully!");
-        console.log("\n" + gameState.currentLocation.description);
-      }
-      
-      // Process any triggered events
-      if (result.triggeredEvents && result.triggeredEvents.length > 0) {
-        for (const event of result.triggeredEvents) {
-          // Handle the event
-          console.log(`Event triggered: ${event.type}`);
-          // TODO: Implement event handling
-        }
+        console.log('Exiting application...');
+      } else if (input.toLowerCase() === 'help') {
+        console.log('Available commands:');
+        console.log('- help: Show this help message');
+        console.log('- exit: Exit the application');
+      } else {
+        console.log('Command not implemented in this placeholder version.');
       }
     }
+
+    // Clean up
+    rl.close();
     
-    console.log("Thanks for playing DnD-AI-DM!");
-    rl.close();
   } catch (error) {
-    console.error("Error:", error);
-    rl.close();
+    console.error('Fatal error:', error);
+    process.exit(1);
   }
 }
 
-// Start the application if this file is run directly
-if (require.main === module) {
-  main().catch(error => {
-    console.error("Fatal error:", error);
-    process.exit(1);
-  });
-}
+// Run the application
+main().catch(error => {
+  console.error('Unhandled error:', error);
+  process.exit(1);
+});
 
 // Export for importing in other files
 export default { main, start }; 
