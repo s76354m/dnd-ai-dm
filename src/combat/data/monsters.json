@@ -1,0 +1,615 @@
+[
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "type": "humanoid",
+    "size": "small",
+    "alignment": "neutral evil",
+    "description": "A small, greenskinned creature with a wicked grin and sharp teeth. Goblins are known for their cunning tactics and preference for ambush attacks.",
+    "stats": {
+      "armorClass": 15,
+      "hitPointsBase": 7,
+      "hitPointsPerLevel": 2,
+      "speed": 30,
+      "abilityScores": {
+        "strength": 8,
+        "dexterity": 14,
+        "constitution": 10,
+        "intelligence": 10,
+        "wisdom": 8,
+        "charisma": 8
+      },
+      "savingThrows": {
+        "dexterity": 2
+      },
+      "skills": {
+        "stealth": 6
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["Common", "Goblin"],
+      "challengeRating": 0.25
+    },
+    "traits": [
+      {
+        "name": "Nimble Escape",
+        "description": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
+      },
+      {
+        "name": "Darkvision",
+        "description": "Can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Scimitar",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.",
+        "toHit": 4,
+        "reach": 5,
+        "damage": {
+          "dice": "1d6",
+          "bonus": 2,
+          "type": "slashing"
+        }
+      },
+      {
+        "name": "Shortbow",
+        "type": "ranged",
+        "description": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+        "toHit": 4,
+        "range": [80, 320],
+        "damage": {
+          "dice": "1d6",
+          "bonus": 2,
+          "type": "piercing"
+        }
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["ambush", "group attacks", "ranged attacks"],
+      "retreatThreshold": 0.3,
+      "aggressiveness": 0.7
+    }
+  },
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "type": "beast",
+    "size": "medium",
+    "alignment": "unaligned",
+    "description": "A fierce wolf with matted fur and sharp teeth. Wolves are pack hunters and employ coordinated tactics to bring down prey.",
+    "stats": {
+      "armorClass": 13,
+      "hitPointsBase": 11,
+      "hitPointsPerLevel": 3,
+      "speed": 40,
+      "abilityScores": {
+        "strength": 12,
+        "dexterity": 15,
+        "constitution": 12,
+        "intelligence": 3,
+        "wisdom": 12,
+        "charisma": 6
+      },
+      "skills": {
+        "perception": 3,
+        "stealth": 4
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": [],
+      "challengeRating": 0.25
+    },
+    "traits": [
+      {
+        "name": "Keen Hearing and Smell",
+        "description": "The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "The wolf has advantage on attack rolls against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Bite",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
+        "toHit": 4,
+        "reach": 5,
+        "damage": {
+          "dice": "2d4",
+          "bonus": 2,
+          "type": "piercing"
+        },
+        "additionalEffects": [
+          {
+            "type": "saving throw",
+            "ability": "strength",
+            "dc": 11,
+            "effect": "knocked prone",
+            "condition": "on hit"
+          }
+        ]
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["pack hunting", "target weakest", "flank enemies"],
+      "retreatThreshold": 0.4,
+      "aggressiveness": 0.6
+    }
+  },
+  {
+    "id": "skeleton",
+    "name": "Skeleton",
+    "type": "undead",
+    "size": "medium",
+    "alignment": "lawful evil",
+    "description": "A grim assembly of animated bones, moving with purpose and malice. Skeletons follow orders without question and fight until destroyed.",
+    "stats": {
+      "armorClass": 13,
+      "hitPointsBase": 13,
+      "hitPointsPerLevel": 2,
+      "speed": 30,
+      "abilityScores": {
+        "strength": 10,
+        "dexterity": 14,
+        "constitution": 15,
+        "intelligence": 6,
+        "wisdom": 8,
+        "charisma": 5
+      },
+      "damage_vulnerabilities": ["bludgeoning"],
+      "damage_immunities": ["poison"],
+      "condition_immunities": ["exhaustion", "poisoned"],
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["understands languages it knew in life but can't speak"],
+      "challengeRating": 0.25
+    },
+    "traits": [
+      {
+        "name": "Undead Nature",
+        "description": "The skeleton doesn't require air, food, drink, or sleep."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Shortsword",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+        "toHit": 4,
+        "reach": 5,
+        "damage": {
+          "dice": "1d6",
+          "bonus": 2,
+          "type": "piercing"
+        }
+      },
+      {
+        "name": "Shortbow",
+        "type": "ranged",
+        "description": "Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.",
+        "toHit": 4,
+        "range": [80, 320],
+        "damage": {
+          "dice": "1d6",
+          "bonus": 2,
+          "type": "piercing"
+        }
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["mindless attacks", "follow orders exactly", "no self-preservation"],
+      "retreatThreshold": 0.1,
+      "aggressiveness": 0.9
+    }
+  },
+  {
+    "id": "orc",
+    "name": "Orc",
+    "type": "humanoid",
+    "size": "medium",
+    "alignment": "chaotic evil",
+    "description": "A brutish, aggressive humanoid with tusks and muscular build. Orcs value strength above all and seek battle and conquest.",
+    "stats": {
+      "armorClass": 13,
+      "hitPointsBase": 15,
+      "hitPointsPerLevel": 3,
+      "speed": 30,
+      "abilityScores": {
+        "strength": 16,
+        "dexterity": 12,
+        "constitution": 16,
+        "intelligence": 7,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "skills": {
+        "intimidation": 2
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["Common", "Orc"],
+      "challengeRating": 0.5
+    },
+    "traits": [
+      {
+        "name": "Aggressive",
+        "description": "As a bonus action, the orc can move up to its speed toward a hostile creature that it can see."
+      },
+      {
+        "name": "Darkvision",
+        "description": "Can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Greataxe",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 9 (1d12 + 3) slashing damage.",
+        "toHit": 5,
+        "reach": 5,
+        "damage": {
+          "dice": "1d12",
+          "bonus": 3,
+          "type": "slashing"
+        }
+      },
+      {
+        "name": "Javelin",
+        "type": "ranged",
+        "description": "Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 6 (1d6 + 3) piercing damage.",
+        "toHit": 5,
+        "reach": 5,
+        "range": [30, 120],
+        "damage": {
+          "dice": "1d6",
+          "bonus": 3,
+          "type": "piercing"
+        }
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["charge", "focus on single target", "reckless assault"],
+      "retreatThreshold": 0.2,
+      "aggressiveness": 0.9
+    }
+  },
+  {
+    "id": "giant_spider",
+    "name": "Giant Spider",
+    "type": "beast",
+    "size": "large",
+    "alignment": "unaligned",
+    "description": "A massive arachnid with hairy legs and venomous fangs. Giant spiders are ambush predators that trap prey in their webs.",
+    "stats": {
+      "armorClass": 14,
+      "hitPointsBase": 26,
+      "hitPointsPerLevel": 4,
+      "speed": 30,
+      "abilityScores": {
+        "strength": 14,
+        "dexterity": 16,
+        "constitution": 12,
+        "intelligence": 2,
+        "wisdom": 11,
+        "charisma": 4
+      },
+      "skills": {
+        "stealth": 7
+      },
+      "senses": {
+        "darkvision": 60,
+        "blindsight": 10
+      },
+      "languages": [],
+      "challengeRating": 1
+    },
+    "traits": [
+      {
+        "name": "Spider Climb",
+        "description": "The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Web Sense",
+        "description": "While in contact with a web, the spider knows the exact location of any other creature in contact with the same web."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The spider ignores movement restrictions caused by webbing."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Bite",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 7 (1d8 + 3) piercing damage, and the target must make a DC 11 Constitution saving throw, taking 9 (2d8) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but poisoned for 1 hour, even after regaining hit points, and is paralyzed while poisoned in this way.",
+        "toHit": 5,
+        "reach": 5,
+        "damage": {
+          "dice": "1d8",
+          "bonus": 3,
+          "type": "piercing"
+        },
+        "additionalEffects": [
+          {
+            "type": "saving throw",
+            "ability": "constitution",
+            "dc": 11,
+            "effect": "2d8 poison damage (half on success)",
+            "condition": "on hit"
+          }
+        ]
+      },
+      {
+        "name": "Web",
+        "type": "ranged",
+        "description": "Ranged Weapon Attack: +5 to hit, range 30/60 ft., one creature. Hit: The target is restrained by webbing. As an action, the restrained target can make a DC 12 Strength check, bursting the webbing on a success. The webbing can also be attacked and destroyed (AC 10; hp 5; vulnerability to fire damage; immunity to bludgeoning, poison, and psychic damage).",
+        "toHit": 5,
+        "range": [30, 60],
+        "additionalEffects": [
+          {
+            "type": "condition",
+            "effect": "restrained",
+            "condition": "on hit",
+            "duration": 0
+          }
+        ]
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["ambush", "web trapping", "poison prey"],
+      "retreatThreshold": 0.5,
+      "aggressiveness": 0.6
+    }
+  },
+  {
+    "id": "ogre",
+    "name": "Ogre",
+    "type": "giant",
+    "size": "large",
+    "alignment": "chaotic evil",
+    "description": "A massive, brutish humanoid standing 9 to 10 feet tall with a bulbous, misshapen head. Ogres are known for their immense strength and terrible temper.",
+    "stats": {
+      "armorClass": 11,
+      "hitPointsBase": 59,
+      "hitPointsPerLevel": 7,
+      "speed": 40,
+      "abilityScores": {
+        "strength": 19,
+        "dexterity": 8,
+        "constitution": 16,
+        "intelligence": 5,
+        "wisdom": 7,
+        "charisma": 7
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["Common", "Giant"],
+      "challengeRating": 2
+    },
+    "traits": [
+      {
+        "name": "Simple-minded",
+        "description": "The ogre has disadvantage on Intelligence saving throws."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Greatclub",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) bludgeoning damage.",
+        "toHit": 6,
+        "reach": 5,
+        "damage": {
+          "dice": "2d8",
+          "bonus": 4,
+          "type": "bludgeoning"
+        }
+      },
+      {
+        "name": "Javelin",
+        "type": "ranged",
+        "description": "Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 11 (2d6 + 4) piercing damage.",
+        "toHit": 6,
+        "reach": 5,
+        "range": [30, 120],
+        "damage": {
+          "dice": "2d6",
+          "bonus": 4,
+          "type": "piercing"
+        }
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["direct assault", "smash and grab", "intimidate smaller creatures"],
+      "retreatThreshold": 0.3,
+      "aggressiveness": 0.8
+    }
+  },
+  {
+    "id": "troll",
+    "name": "Troll",
+    "type": "giant",
+    "size": "large",
+    "alignment": "chaotic evil",
+    "description": "A lanky, rubbery-skinned giant with an elongated nose and arms. Trolls are feared for their remarkable regenerative abilities and ravenous appetite.",
+    "stats": {
+      "armorClass": 15,
+      "hitPointsBase": 84,
+      "hitPointsPerLevel": 8,
+      "speed": 30,
+      "abilityScores": {
+        "strength": 18,
+        "dexterity": 13,
+        "constitution": 20,
+        "intelligence": 7,
+        "wisdom": 9,
+        "charisma": 7
+      },
+      "skills": {
+        "perception": 2
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["Giant"],
+      "challengeRating": 5
+    },
+    "traits": [
+      {
+        "name": "Keen Smell",
+        "description": "The troll has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Regeneration",
+        "description": "The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiattack",
+        "type": "special",
+        "description": "The troll makes three attacks: one with its bite and two with its claws."
+      },
+      {
+        "name": "Bite",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) piercing damage.",
+        "toHit": 7,
+        "reach": 5,
+        "damage": {
+          "dice": "1d6",
+          "bonus": 4,
+          "type": "piercing"
+        }
+      },
+      {
+        "name": "Claw",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) slashing damage.",
+        "toHit": 7,
+        "reach": 5,
+        "damage": {
+          "dice": "2d6",
+          "bonus": 4,
+          "type": "slashing"
+        }
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["relentless pursuit", "target weaker prey", "relies on regeneration"],
+      "retreatThreshold": 0.1,
+      "aggressiveness": 0.9
+    }
+  },
+  {
+    "id": "young_dragon_red",
+    "name": "Young Red Dragon",
+    "type": "dragon",
+    "size": "large",
+    "alignment": "chaotic evil",
+    "description": "A fearsome reptilian creature with crimson scales, horns, and massive wings. Even young red dragons are arrogant, territorial, and quick to anger.",
+    "stats": {
+      "armorClass": 18,
+      "hitPointsBase": 178,
+      "hitPointsPerLevel": 12,
+      "speed": 40,
+      "abilityScores": {
+        "strength": 23,
+        "dexterity": 10,
+        "constitution": 21,
+        "intelligence": 14,
+        "wisdom": 11,
+        "charisma": 19
+      },
+      "savingThrows": {
+        "dexterity": 4,
+        "constitution": 9,
+        "wisdom": 4,
+        "charisma": 8
+      },
+      "skills": {
+        "perception": 8,
+        "stealth": 4
+      },
+      "damage_immunities": ["fire"],
+      "senses": {
+        "blindsight": 30,
+        "darkvision": 120
+      },
+      "languages": ["Common", "Draconic"],
+      "challengeRating": 10
+    },
+    "traits": [
+      {
+        "name": "Fire Adaptation",
+        "description": "The dragon ignores the drawbacks of a hot environment and is immune to fire damage."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiattack",
+        "type": "special",
+        "description": "The dragon makes three attacks: one with its bite and two with its claws."
+      },
+      {
+        "name": "Bite",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +10 to hit, reach 10 ft., one target. Hit: 17 (2d10 + 6) piercing damage plus 3 (1d6) fire damage.",
+        "toHit": 10,
+        "reach": 10,
+        "damage": {
+          "dice": "2d10",
+          "bonus": 6,
+          "type": "piercing"
+        },
+        "additionalEffects": [
+          {
+            "type": "damage",
+            "effect": "1d6 fire damage",
+            "condition": "on hit"
+          }
+        ]
+      },
+      {
+        "name": "Claw",
+        "type": "melee",
+        "description": "Melee Weapon Attack: +10 to hit, reach 5 ft., one target. Hit: 13 (2d6 + 6) slashing damage.",
+        "toHit": 10,
+        "reach": 5,
+        "damage": {
+          "dice": "2d6",
+          "bonus": 6,
+          "type": "slashing"
+        }
+      },
+      {
+        "name": "Fire Breath",
+        "type": "special",
+        "description": "The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 (16d6) fire damage on a failed save, or half as much damage on a successful one.",
+        "additionalEffects": [
+          {
+            "type": "saving throw",
+            "ability": "dexterity",
+            "dc": 17,
+            "effect": "16d6 fire damage (half on success)",
+            "condition": "always"
+          }
+        ]
+      }
+    ],
+    "behavior": {
+      "preferredTactics": ["aerial assault", "fire breath from distance", "intimidation", "target spellcasters first"],
+      "retreatThreshold": 0.3,
+      "aggressiveness": 0.8
+    }
+  }
+] 

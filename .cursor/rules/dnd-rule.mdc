@@ -1,0 +1,515 @@
+---
+description: Dnd Project plan
+globs: 
+alwaysApply: true
+---
+# AI-Powered D&D Dungeon Master
+
+## Project Overview
+DnD-AI-DM is an advanced TypeScript application that leverages large language models (LLMs) and structured data systems to create a fully automated Dungeon Master for Dungeons & Dragons campaigns. This system provides a complete text-based D&D experience without requiring a human Dungeon Master, handling all aspects of gameplay including narrative generation, combat resolution, character management, and world simulation.
+
+## Technical Objectives
+1. Implement a modular, maintainable TypeScript architecture with clear separation of concerns
+2. Develop a robust AI orchestration layer that manages context windows and prompt engineering
+3. Create comprehensive data models for D&D game mechanics with proper type validation
+4. Build efficient state management systems for tracking complex game scenarios
+5. Implement fault-tolerant event handling with proper error recovery
+6. Design a responsive user interface that maintains proper game state across sessions
+
+## Core Features and AI Integration
+
+### 1. Character Management System
+- **Data Model Implementation**
+  - Strong typing for character attributes using TypeScript interfaces
+  - Comprehensive validation for character creation and modification
+  - Persistent state management with transaction logging
+  - Efficient serialization/deserialization with schema validation
+
+- **Race Implementation**
+  - Dynamic trait application based on selected race
+  - Proper ability score modifications with validation
+  - Special ability implementation with effect tracking
+  - Support for subraces with inheritance-based abilities
+
+- **Class Implementation**
+  - Progressive feature unlocking based on character level
+  - Resource management (spell slots, class features, etc.)
+  - Multi-class support with proper rule implementation
+  - Subclass integration with feature dependencies
+
+- **Background System**
+  - Trait, ideal, bond, and flaw integration with narrative generation
+  - Equipment provisioning with inventory management
+  - Skill proficiency allocation with validation
+  - Background-based narrative hooks with AI integration
+
+### 2. AI-Powered Game World System
+- **LLM Integration**
+  - Context window optimization for continuous narrative
+  - Fine-tuned prompt templates for consistent output
+  - Response parsing and validation with error recovery
+  - State tracking across multiple AI interactions
+
+- **Location Generation and Management**
+  - Procedural location generation with AI-enhanced descriptions
+  - Persistent location state with dynamic updates
+  - Navigation system with spatial relationship tracking
+  - Environmental effect implementation with game mechanic impacts
+
+- **NPC System**
+  - Persistent NPC data model with memory of player interactions
+  - AI-driven personality generation with consistent traits
+  - Dynamic dialogue system with contextual awareness
+  - Relationship tracking with influence mechanics
+
+- **Quest Management**
+  - Procedural quest generation with narrative consistency
+  - Quest dependency graph implementation
+  - State tracking with milestone achievement
+  - Dynamic difficulty adjustment based on player capabilities
+
+### 3. Combat System Architecture
+- **Initiative Management**
+  - Sorted queue implementation with proper tie-breaking
+  - Dynamic initiative modification handling
+  - Status effect integration with initiative impacts
+  - Round and turn tracking with proper state transitions
+
+- **Action Resolution Engine**
+  - Action economy implementation (action, bonus action, reaction)
+  - Attack resolution with proper modifier calculation
+  - Damage calculation with resistance/vulnerability handling
+  - Save DC implementation with proper difficulty scaling
+
+- **Condition Tracking System**
+  - Effect application and removal with duration tracking
+  - Stacking rules implementation for similar effects
+  - Impact calculation on character capabilities
+  - AI integration for condition description and narrative
+
+- **Tactical Decision Engine**
+  - AI-driven enemy tactical assessment
+  - Target prioritization based on threat analysis
+  - Ability selection based on situational evaluation
+  - Positioning logic with terrain consideration
+
+### 4. Spellcasting System Implementation
+- **Spell Data Model**
+  - Comprehensive spell effect implementation
+  - Component tracking (verbal, somatic, material)
+  - Concentration management with conflict resolution
+  - Scaling effects based on cast level
+
+- **Resource Management**
+  - Spell slot tracking with class-specific rules
+  - Spell preparation system with validation
+  - Rest mechanics with proper resource recovery
+  - Special ability interaction with spellcasting
+
+- **Effect Resolution**
+  - Area-of-effect calculation with target identification
+  - Saving throw implementation with proper DC calculation
+  - Status effect application from spell effects
+  - Duration tracking with expiration handling
+
+- **AI Spell Description**
+  - Dynamic spell effect narration based on context
+  - Environmental interaction description
+  - Target reaction generation based on effect and character
+  - Failure and success state description with appropriate detail
+
+### 5. Item and Equipment System
+- **Inventory Management**
+  - Weight calculation with encumbrance rules
+  - Container implementation with nested storage
+  - Item categorization with proper filtering
+  - Currency management with conversion handling
+
+- **Equipment System**
+  - Equipped item status tracking
+  - Attribute modification from equipped items
+  - Attunement system with limitation enforcement
+  - Set bonus implementation for related items
+
+- **Magical Item Implementation**
+  - Charge tracking with recharge mechanics
+  - Activation condition monitoring
+  - Effect application with proper game impact
+  - Durability and maintenance system
+
+- **Item Interaction**
+  - Usage mechanics with resource consumption
+  - Crafting system with component requirements
+  - Trading system with value calculation
+  - AI-driven item description and discovery
+
+## System Architecture
+
+### Core Components and Data Flow
+```
+┌─────────────────┐      ┌────────────────────┐      ┌──────────────────┐
+│                 │      │                    │      │                  │
+│  User Interface ├──────┤  Game Controller   ├──────┤  AI Integration  │
+│                 │      │                    │      │                  │
+└─────────────────┘      └────────────────────┘      └──────────────────┘
+                             │           ▲
+                             ▼           │
+         ┌─────────────────────────────────────────────────┐
+         │                                                 │
+         │                  Game State                     │
+         │                                                 │
+         └─────────────────────────────────────────────────┘
+                 │                 │                │
+                 ▼                 ▼                ▼
+      ┌──────────────┐    ┌───────────────┐   ┌────────────────┐
+      │              │    │               │   │                │
+      │  Character   │    │    World      │   │    Combat      │
+      │   System     │    │    System     │   │    System      │
+      │              │    │               │   │                │
+      └──────────────┘    └───────────────┘   └────────────────┘
+             │                   │                    │
+             └───────────────────┼────────────────────┘
+                                 ▼
+                         ┌───────────────┐
+                         │               │
+                         │  Persistence  │
+                         │    Layer      │
+                         │               │
+                         └───────────────┘
+```
+
+### Key Interfaces
+
+#### GameState Interface
+```typescript
+interface GameState {
+  player: Character;
+  currentLocation: Location;
+  npcs: Map<string, NPC>;
+  combatState: CombatState | null;
+  inventory: Inventory;
+  quests: Quest[];
+  gameTime: GameTime;
+  worldState: WorldState;
+  sessionHistory: GameEvent[];
+}
+```
+
+#### Character Interface
+```typescript
+interface Character {
+  id: string;
+  name: string;
+  race: Race;
+  class: CharacterClass[];
+  background: Background;
+  abilities: AbilityScores;
+  hitPoints: {current: number, maximum: number};
+  level: number;
+  experience: number;
+  proficiencies: Proficiency[];
+  inventory: Inventory;
+  spellbook: Spellbook;
+  features: Feature[];
+  personality: CharacterPersonality;
+  conditions: Condition[];
+}
+```
+
+#### AI Integration Interface
+```typescript
+interface AIService {
+  generateNarrative(context: NarrativeContext): Promise<string>;
+  resolveNPCAction(npc: NPC, context: ActionContext): Promise<NPCAction>;
+  generateLocation(locationParams: LocationParams): Promise<Location>;
+  createNPC(npcParams: NPCParams): Promise<NPC>;
+  resolveAmbiguousCommand(command: string, context: GameState): Promise<ResolvedCommand>;
+  describeSpellEffect(spell: Spell, context: SpellContext): Promise<string>;
+  generateCombatNarrative(action: CombatAction, result: ActionResult): Promise<string>;
+}
+```
+
+## Technical Implementation Challenges
+
+### 1. Character Creation Flow
+The initial codebase had structural issues that prevented proper character creation:
+
+**Issue**: Missing event handlers in index.ts for the CharacterCreator events.
+**Solution**: Implement comprehensive event handling system:
+
+```typescript
+// Proper event handling implementation
+creator.on('namePrompt', async () => {
+  const name = await promptInput('Enter your character name: ');
+  creator.updateCharacterName(name);
+});
+
+creator.on('racePrompt', async () => {
+  const races = creator.getAvailableRaces();
+  const raceSelection = await promptSelection('Choose your race:', races);
+  creator.updateCharacterRace(raceSelection);
+});
+
+// Additional event handlers for class, abilities, background, etc.
+```
+
+**Issue**: Missing character update methods in the CharacterCreator class.
+**Solution**: Add proper public methods for character property updates:
+
+```typescript
+public updateCharacterName(name: string): void {
+  this.validateName(name);
+  this.state.character.name = name;
+  this.emit('nameUpdated', name);
+}
+
+public updateCharacterRace(race: Race): void {
+  this.validateRaceSelection(race);
+  this.state.character.race = race;
+  this.applyRacialTraits(race);
+  this.emit('raceUpdated', race);
+}
+
+// Additional update methods for other character properties
+```
+
+### 2. Game Loop Implementation
+**Issue**: Application lacked an active game loop for command processing.
+**Solution**: Implement a robust game loop with proper state management:
+
+```typescript
+async function startGameLoop(gameState: GameState): Promise<void> {
+  let running = true;
+  const commandProcessor = new CommandProcessor(gameState);
+  
+  console.log("Welcome to D&D AI DM! Type 'help' for available commands.");
+  
+  try {
+    while (running) {
+      const input = await promptInput('\n> ');
+      
+      if (input.toLowerCase() === 'exit') {
+        running = false;
+        continue;
+      }
+      
+      try {
+        const result = await commandProcessor.processCommand(input);
+        console.log(result.message);
+        
+        // Process any state changes resulting from the command
+        if (result.stateChanges) {
+          applyStateChanges(gameState, result.stateChanges);
+        }
+        
+        // Check for any triggered events
+        const events = checkForEvents(gameState);
+        for (const event of events) {
+          await handleGameEvent(event, gameState);
+        }
+      } catch (error) {
+        console.error(`Error processing command: ${error.message}`);
+      }
+    }
+  } catch (error) {
+    console.error(`Fatal error in game loop: ${error.message}`);
+    // Attempt to save game state before exiting
+    await saveGameState(gameState);
+  }
+}
+```
+
+### 3. AI Integration with Proper Context Management
+**Challenge**: Maintaining coherent narrative across multiple AI calls.
+**Solution**: Implement context window management with proper session history:
+
+```typescript
+class NarrativeManager {
+  private sessionContext: string[] = [];
+  private readonly maxContextItems = 20;
+  
+  async generateResponse(prompt: string, currentState: GameState): Promise<string> {
+    // Prepare context window
+    const context = this.prepareContext(currentState);
+    
+    // Generate AI response
+    const response = await this.aiService.generateNarrative({
+      prompt,
+      context,
+      characters: this.extractRelevantCharacters(currentState),
+      location: currentState.currentLocation,
+      recentEvents: this.getRecentEvents(currentState)
+    });
+    
+    // Update session context
+    this.updateSessionContext(prompt, response);
+    
+    return response;
+  }
+  
+  private prepareContext(state: GameState): string {
+    // Combine session context with relevant game state
+    return [
+      ...this.sessionContext,
+      `Current location: ${state.currentLocation.name}`,
+      `Characters present: ${this.getPresentCharacterNames(state)}`,
+      `Time of day: ${state.gameTime.timeOfDay}`,
+      `Weather: ${state.worldState.currentWeather}`,
+      // Additional context elements
+    ].join('\n');
+  }
+  
+  private updateSessionContext(prompt: string, response: string): void {
+    this.sessionContext.push(`Player: ${prompt}`);
+    this.sessionContext.push(`DM: ${response}`);
+    
+    // Maintain fixed context window size
+    if (this.sessionContext.length > this.maxContextItems) {
+      this.sessionContext = this.sessionContext.slice(
+        this.sessionContext.length - this.maxContextItems
+      );
+    }
+  }
+  
+  // Additional helper methods
+}
+```
+
+## Development Workflow
+
+### 1. Project Structure
+```
+dnd-ai-dm/
+├── src/
+│   ├── character/           # Character creation and management
+│   │   ├── classes/         # Character class implementations
+│   │   ├── races/           # Race implementations
+│   │   └── backgrounds/     # Background implementations
+│   ├── world/               # World and location management
+│   │   ├── locations/       # Location types and generation
+│   │   ├── npcs/            # NPC generation and management
+│   │   └── quests/          # Quest system
+│   ├── combat/              # Combat system
+│   │   ├── actions/         # Combat action implementations
+│   │   ├── conditions/      # Status effect implementations
+│   │   └── tactical/        # AI tactical decision-making
+│   ├── magic/               # Spellcasting system
+│   │   ├── spells/          # Spell implementations
+│   │   └── effects/         # Spell effect system
+│   ├── items/               # Item and equipment system
+│   │   ├── equipment/       # Wearable items
+│   │   ├── consumables/     # Consumable items
+│   │   └── magical/         # Magical item implementations
+│   ├── ai/                  # AI integration
+│   │   ├── services/        # AI service implementation
+│   │   ├── prompts/         # Prompt templates
+│   │   └── context/         # Context management
+│   ├── core/                # Core game engine
+│   │   ├── state/           # Game state management
+│   │   ├── events/          # Event system
+│   │   └── commands/        # Command processing
+│   ├── utils/               # Utility functions
+│   │   ├── dice.ts          # Dice rolling utilities
+│   │   ├── validation.ts    # Input validation
+│   │   └── formatting.ts    # Text formatting utilities
+│   ├── data/                # Game data
+│   │   ├── spells.ts        # Spell definitions
+│   │   ├── monsters.ts      # Monster definitions
+│   │   └── items.ts         # Item definitions
+│   ├── persistence/         # Save/load functionality
+│   │   ├── serialization.ts # State serialization
+│   │   └── storage.ts       # Storage interface
+│   ├── ui/                  # User interface
+│   │   ├── input.ts         # Input handling
+│   │   └── output.ts        # Output formatting
+│   └── index.ts             # Application entry point
+├── test/                    # Test files
+│   ├── unit/                # Unit tests
+│   ├── integration/         # Integration tests
+│   └── e2e/                 # End-to-end tests
+├── dist/                    # Compiled JavaScript
+├── .env                     # Environment variables
+├── package.json             # Dependencies and scripts
+└── tsconfig.json            # TypeScript configuration
+```
+
+### 2. Implementation Priority
+1. Core engine with state management
+2. Character system with complete D&D rules
+3. Basic command processing and UI
+4. AI integration with narrative generation
+5. Combat system with complete mechanics
+6. Magic system with spell effects
+7. Item system with equipment effects
+8. World generation with locations and NPCs
+9. Quest system with dynamic generation
+10. Persistence with save/load functionality
+11. Testing and refinement
+12. Documentation and deployment
+
+### 3. AI Implementation Strategy
+- Implement proper prompt engineering with templates
+- Use fine-tuned models for consistent output
+- Implement fallback mechanisms for AI service interruptions
+- Create caching layer for common AI responses
+- Develop validation system for AI-generated content
+- Implement context management for continuous narrative
+- Create specialized prompts for different game aspects
+
+## Testing Strategy
+
+### Unit Testing
+- Test all game mechanic implementations against D&D rules
+- Validate character creation with all race/class combinations
+- Test combat resolution with various scenarios
+- Verify spell effect implementation with edge cases
+- Test item interaction and effect application
+
+### Integration Testing
+- Verify AI narrative consistency across sessions
+- Test complete character creation flow
+- Validate combat system with full encounter scenarios
+- Test game state persistence and restoration
+- Verify event handling and state transitions
+
+### End-to-End Testing
+- Complete campaign scenarios with multiple encounters
+- Long-running sessions for narrative consistency
+- Performance testing with large game states
+- Error recovery with intentional failure injection
+- User experience testing with varied input styles
+
+## Deployment and Distribution
+- Package as standalone application with bundled dependencies
+- Implement configuration system for AI service credentials
+- Create installation documentation for different platforms
+- Develop update mechanism for data and rule changes
+- Implement telemetry for performance monitoring (opt-in)
+- Create backup system for game state protection
+
+## Performance Considerations
+- Optimize AI prompt length to minimize token usage
+- Implement caching for frequently accessed game data
+- Use lazy loading for non-essential game components
+- Optimize state serialization for large game states
+- Implement debouncing for rapid user input
+- Use worker threads for compute-intensive operations
+
+## Security Considerations
+- Secure storage of API credentials
+- Sanitize all user input before processing
+- Implement proper error handling to prevent information leakage
+- Validate AI responses before presenting to users
+- Implement rate limiting for AI service calls
+- Use secure storage for game state persistence
+
+## Confidence Level: 95%
+
+## Assumptions:
+1. The application will use TypeScript for all implementation
+2. The AI integration will primarily use LLM APIs
+3. The application will be used in a text-based interface
+4. D&D 5th Edition rules will be the primary rule system
+5. The application will be deployed as a standalone application
+6. Network connectivity will be required for AI functionality
+7. The target runtime environment is Node.js

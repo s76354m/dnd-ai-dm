@@ -1,0 +1,231 @@
+[
+  {
+    "id": "item_flaming_sword",
+    "name": "Flaming Longsword",
+    "description": "A finely crafted longsword with a blade that erupts into magical flames when drawn.",
+    "weight": 3,
+    "value": 1000,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["versatile", "metal"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_fire_damage"],
+    "lore": "This blade was forged by the fire genasi smith Ember in the City of Brass. It's said to contain a spark of elemental fire.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_frost_dagger",
+    "name": "Frost Dagger",
+    "description": "A dagger with a blade of enchanted ice that never melts. The hilt is wrapped in white leather with blue runes.",
+    "weight": 1,
+    "value": 850,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["finesse", "light", "thrown"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_frost_damage"],
+    "lore": "Created by ice mages in the Frozen North, these daggers were originally crafted as ritual implements but proved equally effective in combat.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_plus_one_armor",
+    "name": "+1 Chain Shirt",
+    "description": "A chain shirt that gleams with a subtle magical aura. Its links seem to shift slightly to better protect the wearer.",
+    "weight": 20,
+    "value": 1100,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["metal", "medium armor"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_plus_one_armor"],
+    "lore": "This chain shirt was created by the master smith Durgan of Steelhold. He was known for embedding protective runes directly into the forging process.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_returning_handaxe",
+    "name": "Returning Handaxe",
+    "description": "A handaxe that flies back to the wielder's hand after being thrown. A faint blue trail follows its path through the air.",
+    "weight": 2,
+    "value": 800,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["light", "thrown"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_returning"],
+    "lore": "These axes were first created for the elite hunters of the Wildwood who needed weapons that could return to them when pursuing prey through the dense forest.",
+    "identificationDC": 13,
+    "isIdentified": false
+  },
+  {
+    "id": "item_lantern_of_revealing",
+    "name": "Lantern of Revealing",
+    "description": "A brass lantern with multiple colored lenses that can reveal hidden doors, traps, and invisibility.",
+    "weight": 2,
+    "value": 500,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["metal", "light source"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_light"],
+    "lore": "Crafted by gnomish tinkerers, these lanterns were originally designed to help miners detect hidden dangers, but adventurers soon recognized their broader utility.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_boots_of_striding",
+    "name": "Boots of Striding",
+    "description": "Supple leather boots that increase the wearer's walking speed. They bear the symbol of a winged foot on each heel.",
+    "weight": 1,
+    "value": 900,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["wearable"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_striding"],
+    "lore": "These boots were first commissioned by royal messengers who needed to travel quickly between distant cities.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_goggles_of_night",
+    "name": "Goggles of Night",
+    "description": "Dark-lensed goggles that grant the wearer darkvision. The lenses have a faint purple glow when viewed at certain angles.",
+    "weight": 0.5,
+    "value": 850,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["wearable"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_darkvision"],
+    "lore": "Drow artificers created these goggles to help their surface-dwelling allies navigate in the Underdark.",
+    "identificationDC": 13,
+    "isIdentified": false
+  },
+  {
+    "id": "item_gauntlets_of_ogre_power",
+    "name": "Gauntlets of Ogre Power",
+    "description": "Heavy leather and metal gauntlets that grant tremendous strength to the wearer. They're adorned with iron studs and ogre runes.",
+    "weight": 2,
+    "value": 2500,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["wearable"],
+    "isMagical": true,
+    "rarity": "rare",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_strength"],
+    "lore": "Created through a ritual that binds the essence of an ogre's might to the metal, these gauntlets were originally crafted to help laborers with heavy lifting.",
+    "identificationDC": 15,
+    "isIdentified": false
+  },
+  {
+    "id": "item_ring_of_fire_resistance",
+    "name": "Ring of Fire Resistance",
+    "description": "A band of reddish gold with a ruby set in a flame-like pattern. The ring feels warm to the touch.",
+    "weight": 0.1,
+    "value": 3000,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["wearable"],
+    "isMagical": true,
+    "rarity": "rare",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_fire_resistance"],
+    "lore": "Fire wizards often craft these rings for their apprentices to protect them during the more dangerous exercises in fire magic.",
+    "identificationDC": 15,
+    "isIdentified": false
+  },
+  {
+    "id": "item_wand_of_magic_missiles",
+    "name": "Wand of Magic Missiles",
+    "description": "A slender ivory wand capped with a blue crystal. It pulses with arcane energy.",
+    "weight": 0.5,
+    "value": 1500,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["arcane focus"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_spell_storing"],
+    "lore": "These wands are common training tools for novice wizards due to the reliability and simplicity of the magic missile spell.",
+    "identificationDC": 12,
+    "isIdentified": false
+  },
+  {
+    "id": "item_thundering_warhammer",
+    "name": "Thundering Warhammer",
+    "description": "A heavy warhammer with runes of thunder etched along its head. It emits a deep rumble when swung with force.",
+    "weight": 4,
+    "value": 1200,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["versatile"],
+    "isMagical": true,
+    "rarity": "uncommon",
+    "attunement": {
+      "required": false
+    },
+    "enchantments": ["ench_thunder_damage"],
+    "lore": "These hammers were first forged by storm giant smiths during their wars with the dragons of old. The hammer's thunder is said to be an echo of the storm giants' rage.",
+    "identificationDC": 13,
+    "isIdentified": false
+  },
+  {
+    "id": "item_vampiric_shortsword",
+    "name": "Vampiric Shortsword",
+    "description": "A sleek shortsword with a crimson sheen to its blade. When it draws blood, faint whispers can be heard.",
+    "weight": 2,
+    "value": 3000,
+    "quantity": 1,
+    "isEquipped": false,
+    "properties": ["finesse", "light"],
+    "isMagical": true,
+    "rarity": "rare",
+    "attunement": {
+      "required": true
+    },
+    "enchantments": ["ench_vampiric"],
+    "lore": "These dark blades are rumored to be created through rituals involving vampire blood, though most were actually forged by necromancers through less sinister but equally complex methods.",
+    "identificationDC": 15,
+    "isIdentified": false,
+    "curseEffect": "The wielder becomes increasingly bloodthirsty, experiencing vivid and violent dreams after each use of the sword's vampiric power."
+  }
+] 

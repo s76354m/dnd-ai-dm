@@ -1,0 +1,247 @@
+[
+  {
+    "id": "loot_table_basic_combat",
+    "name": "Basic Combat Rewards",
+    "description": "Standard loot from regular combat encounters",
+    "entries": [
+      {
+        "itemId": "item_flaming_sword",
+        "weight": 3,
+        "minLevel": 3,
+        "dropChance": 2,
+        "conditions": {
+          "enemyTypes": ["humanoid", "elemental"]
+        }
+      },
+      {
+        "itemId": "item_frost_dagger",
+        "weight": 5,
+        "minLevel": 2,
+        "dropChance": 3,
+        "conditions": {
+          "enemyTypes": ["humanoid", "elemental", "undead"]
+        }
+      },
+      {
+        "itemId": "item_plus_one_armor",
+        "weight": 3,
+        "minLevel": 3,
+        "dropChance": 2,
+        "conditions": {
+          "enemyTypes": ["humanoid", "giant"]
+        }
+      },
+      {
+        "itemId": "item_returning_handaxe",
+        "weight": 4,
+        "minLevel": 2,
+        "dropChance": 2,
+        "conditions": {
+          "enemyTypes": ["humanoid", "beast"]
+        }
+      },
+      {
+        "itemId": "item_thundering_warhammer",
+        "weight": 3,
+        "minLevel": 4,
+        "dropChance": 2,
+        "conditions": {
+          "enemyTypes": ["giant", "humanoid"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "loot_table_dungeon_exploration",
+    "name": "Dungeon Exploration Rewards",
+    "description": "Items found while exploring dungeons, ruins, and ancient locations",
+    "entries": [
+      {
+        "itemId": "item_lantern_of_revealing",
+        "weight": 8,
+        "minLevel": 1,
+        "dropChance": 5,
+        "conditions": {
+          "locations": ["dungeon", "cave", "ruins"]
+        }
+      },
+      {
+        "itemId": "item_boots_of_striding",
+        "weight": 6,
+        "minLevel": 3,
+        "dropChance": 4,
+        "conditions": {
+          "locations": ["ruins", "temple", "castle"]
+        }
+      },
+      {
+        "itemId": "item_goggles_of_night",
+        "weight": 7,
+        "minLevel": 2,
+        "dropChance": 4,
+        "conditions": {
+          "locations": ["cave", "underdark", "dungeon"]
+        }
+      },
+      {
+        "itemId": "item_wand_of_magic_missiles",
+        "weight": 5,
+        "minLevel": 2,
+        "dropChance": 3,
+        "conditions": {
+          "locations": ["wizard tower", "library", "temple"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "loot_table_boss_rewards",
+    "name": "Boss Encounter Rewards",
+    "description": "Powerful items dropped by boss enemies",
+    "entries": [
+      {
+        "itemId": "item_gauntlets_of_ogre_power",
+        "weight": 10,
+        "minLevel": 5,
+        "dropChance": 20,
+        "conditions": {
+          "bossOnly": true,
+          "enemyTypes": ["giant", "humanoid"]
+        }
+      },
+      {
+        "itemId": "item_ring_of_fire_resistance",
+        "weight": 10,
+        "minLevel": 6,
+        "dropChance": 25,
+        "conditions": {
+          "bossOnly": true,
+          "enemyTypes": ["dragon", "elemental", "fiend"]
+        }
+      },
+      {
+        "itemId": "item_vampiric_shortsword",
+        "weight": 8,
+        "minLevel": 7,
+        "dropChance": 15,
+        "conditions": {
+          "bossOnly": true,
+          "enemyTypes": ["undead", "fiend"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "loot_table_quest_rewards",
+    "name": "Quest Completion Rewards",
+    "description": "Items awarded for completing quests",
+    "entries": [
+      {
+        "itemId": "item_flaming_sword",
+        "weight": 10,
+        "minLevel": 1,
+        "dropChance": 30,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_frost_dagger",
+        "weight": 10,
+        "minLevel": 1,
+        "dropChance": 30,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_plus_one_armor",
+        "weight": 10,
+        "minLevel": 2,
+        "dropChance": 25,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_returning_handaxe",
+        "weight": 10,
+        "minLevel": 2,
+        "dropChance": 25,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_boots_of_striding",
+        "weight": 8,
+        "minLevel": 3,
+        "dropChance": 20,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_goggles_of_night",
+        "weight": 8,
+        "minLevel": 3,
+        "dropChance": 20,
+        "conditions": {
+          "questRelated": true
+        }
+      },
+      {
+        "itemId": "item_gauntlets_of_ogre_power",
+        "weight": 5,
+        "minLevel": 5,
+        "dropChance": 10,
+        "conditions": {
+          "questRelated": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "loot_table_hidden_treasures",
+    "name": "Hidden Treasures",
+    "description": "Special items hidden in the world that require investigation to find",
+    "entries": [
+      {
+        "itemId": "item_ring_of_fire_resistance",
+        "weight": 6,
+        "minLevel": 4,
+        "dropChance": 40,
+        "conditions": {
+          "locations": ["volcano", "fire temple", "forge"]
+        }
+      },
+      {
+        "itemId": "item_wand_of_magic_missiles",
+        "weight": 8,
+        "minLevel": 2,
+        "dropChance": 50,
+        "conditions": {
+          "locations": ["wizard tower", "arcane library", "magical ruins"]
+        }
+      },
+      {
+        "itemId": "item_vampiric_shortsword",
+        "weight": 4,
+        "minLevel": 6,
+        "dropChance": 30,
+        "conditions": {
+          "locations": ["crypt", "necromancer lair", "ancient battlefield"]
+        }
+      },
+      {
+        "itemId": "item_thundering_warhammer",
+        "weight": 7,
+        "minLevel": 3,
+        "dropChance": 45,
+        "conditions": {
+          "locations": ["storm temple", "dwarven forge", "giant stronghold"]
+        }
+      }
+    ]
+  }
+] 

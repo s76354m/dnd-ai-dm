@@ -1,0 +1,203 @@
+[
+  {
+    "id": "ench_fire_damage",
+    "name": "Flaming",
+    "description": "The weapon is wreathed in magical flames. It deals an additional 1d6 fire damage on a hit.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "damage",
+        "target": "fire",
+        "value": "1d6"
+      }
+    ]
+  },
+  {
+    "id": "ench_frost_damage",
+    "name": "Frost",
+    "description": "The weapon is encrusted with magical frost. It deals an additional 1d6 cold damage on a hit.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "damage",
+        "target": "cold",
+        "value": "1d6"
+      }
+    ]
+  },
+  {
+    "id": "ench_plus_one",
+    "name": "+1",
+    "description": "This weapon is imbued with a +1 bonus to attack and damage rolls.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "attack",
+        "target": "all",
+        "value": 1
+      },
+      {
+        "type": "damage",
+        "target": "all",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "ench_plus_one_armor",
+    "name": "+1 Defense",
+    "description": "This armor is imbued with protective magic, granting a +1 bonus to AC.",
+    "type": "armor",
+    "itemTypeRestrictions": ["armor"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "ac",
+        "target": "base",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "ench_returning",
+    "name": "Returning",
+    "description": "This thrown weapon returns to the wielder's hand immediately after an attack.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "ench_light",
+    "name": "Light",
+    "description": "This item can shed bright light in a 20-foot radius and dim light for an additional 20 feet when activated.",
+    "type": "utility",
+    "rarity": "common",
+    "activationRequirement": "action"
+  },
+  {
+    "id": "ench_striding",
+    "name": "Striding",
+    "description": "These boots increase the wearer's walking speed by 10 feet.",
+    "type": "utility",
+    "itemTypeRestrictions": ["armor"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "speed",
+        "target": "walking",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "id": "ench_darkvision",
+    "name": "Darkvision",
+    "description": "While wearing these goggles, the user has darkvision out to a range of 60 feet.",
+    "type": "utility",
+    "itemTypeRestrictions": ["armor"],
+    "rarity": "uncommon"
+  },
+  {
+    "id": "ench_strength",
+    "name": "Strength",
+    "description": "This item enhances the wearer's strength, increasing their Strength score by 2, to a maximum of 20.",
+    "type": "ability",
+    "rarity": "rare",
+    "modifiers": [
+      {
+        "type": "ability",
+        "target": "strength",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": "ench_fire_resistance",
+    "name": "Fire Resistance",
+    "description": "The wearer has resistance to fire damage while wearing this item.",
+    "type": "resistance",
+    "rarity": "rare"
+  },
+  {
+    "id": "ench_spell_storing",
+    "name": "Spell Storing",
+    "description": "This item can store a spell of up to 3rd level, cast into it by a spellcaster. The spell can be cast from the item by using an action.",
+    "type": "spell",
+    "rarity": "rare",
+    "charges": {
+      "max": 1,
+      "recharge": "special"
+    },
+    "activationRequirement": "action"
+  },
+  {
+    "id": "ench_mage_hand",
+    "name": "Mage Hand",
+    "description": "This item allows the wielder to cast the Mage Hand cantrip at will.",
+    "type": "spell",
+    "rarity": "common",
+    "spells": [
+      {
+        "name": "Mage Hand",
+        "level": 0,
+        "charges": 0
+      }
+    ],
+    "activationRequirement": "action"
+  },
+  {
+    "id": "ench_misty_step",
+    "name": "Misty Step",
+    "description": "This item allows the wielder to cast the Misty Step spell once per day.",
+    "type": "spell",
+    "rarity": "uncommon",
+    "spells": [
+      {
+        "name": "Misty Step",
+        "level": 2,
+        "charges": 1
+      }
+    ],
+    "charges": {
+      "max": 1,
+      "recharge": "dawn"
+    },
+    "activationRequirement": "bonus action"
+  },
+  {
+    "id": "ench_thunder_damage",
+    "name": "Thundering",
+    "description": "This weapon emits a thunderous boom when it strikes, dealing an extra 1d6 thunder damage and creating a loud noise that can be heard up to 300 feet away.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "uncommon",
+    "modifiers": [
+      {
+        "type": "damage",
+        "target": "thunder",
+        "value": "1d6"
+      }
+    ]
+  },
+  {
+    "id": "ench_vampiric",
+    "name": "Vampiric",
+    "description": "When you hit with an attack using this weapon, you gain temporary hit points equal to half the damage dealt by the enchantment.",
+    "type": "weapon",
+    "itemTypeRestrictions": ["weapon"],
+    "rarity": "rare",
+    "modifiers": [
+      {
+        "type": "damage",
+        "target": "necrotic",
+        "value": "1d6"
+      }
+    ]
+  }
+] 
