@@ -15,7 +15,7 @@ This directory contains comprehensive documentation for the D&D AI Dungeon Maste
 ### Technical Documentation
 - [AI Integration](./AI_INTEGRATION.md) - Details about the AI integration architecture and usage
 - [Testing](./TESTING.md) - Information about the testing approach and test suite
-- [Architecture](./ARCHITECTURE.md) - Overview of the technical architecture
+- [Architecture](../src/ARCHITECTURE.md) - Overview of the technical architecture
 
 ### Development
 - [Contribution Guide](./CONTRIBUTING.md) - Guidelines for contributing to the project
@@ -38,3 +38,4 @@ When updating documentation, please follow these guidelines:
 3. Link between related documentation where appropriate
 4. Include examples and diagrams when they add clarity
 5. Follow the writing style guide for consistent tone and terminology 
+
