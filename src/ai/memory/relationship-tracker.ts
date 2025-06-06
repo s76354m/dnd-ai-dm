@@ -5,7 +5,6 @@
  * sentiment, trust, and interaction history to enhance narrative coherence.
  */
 
-import { SimpleNPC, SimpleCharacter } from '../../simple-main';
 
 /**
  * Relationship strength values

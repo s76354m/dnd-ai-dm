@@ -7,7 +7,43 @@
 
 import { RealAIService } from '../ai/real-ai-service';
 import { CommandInterpreter } from '../ai/command-interpreter';
-import { SimpleCharacter, SimpleNPC } from '../simple-main';
+interface SimpleCharacter {
+  id: string;
+  name: string;
+  race: string;
+  class: string;
+  level: number;
+  experiencePoints: number;
+  hitPoints: { current: number; maximum: number };
+  armorClass: number;
+  initiative: number;
+  speed: number;
+  proficiencyBonus: number;
+  abilityScores: Record<string, { score: number; modifier: number }>;
+  attacks: Array<{ name: string; damage: string; range: number }>;
+  inventory: {
+    gold: number;
+    items: Array<{
+      id: string;
+      name: string;
+      description: string;
+      weight: number;
+      value: number;
+      quantity: number;
+      category: string;
+    }>;
+  };
+  conditions: any[];
+}
+
+interface SimpleNPC {
+  id: string;
+  name: string;
+  race: string;
+  profession: string;
+  trait: string;
+  location: string;
+}
 import { envLoader } from '../utils/env-loader';
 import { NarrativeContext, CommandContext } from '../ai/enhanced-ai-service';
 import * as readline from 'readline';

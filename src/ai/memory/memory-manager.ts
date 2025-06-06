@@ -5,7 +5,7 @@
  * relevant narrative events and optimizing token usage for context windows.
  */
 
-import { GameState, SimpleNPC, SimpleCharacter, SimpleLocation } from '../../simple-main';
+import { GameState } from '../../core/interfaces/game';
 
 /**
  * Types of memory items that can be stored

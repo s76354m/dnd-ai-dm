@@ -19,7 +19,7 @@ The enhanced context management system consists of several specialized component
 ```typescript
 import { AIService } from '../ai-service-wrapper';
 import { integrateEnhancedContext } from './integration/context-integration';
-import { GameState } from '../simple-main';
+import { GameState } from '../core/interfaces/game';
 
 // Create base AI service
 const baseService = new AIService();

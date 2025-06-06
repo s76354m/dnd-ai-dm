@@ -7,7 +7,7 @@
 
 import { SimpleAIService } from './simple-ai-service';
 import { RealAIService } from './real-ai-service';
-import { GameState, SimpleNPC } from '../simple-main';
+
 import { CommandContext } from './enhanced-ai-service';
 import { envLoader } from '../utils/env-loader';
 

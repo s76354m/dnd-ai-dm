@@ -6,7 +6,7 @@
  * relationship tracking, context optimization, and prompt templates.
  */
 
-import { GameState } from '../simple-main';
+import { GameState } from '../core/interfaces/game';
 import { MemoryManager } from './memory/memory-manager';
 import { RelationshipTracker } from './memory/relationship-tracker';
 import { ContextOptimizer, GameScenario } from './memory/context-optimizer';
