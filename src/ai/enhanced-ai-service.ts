@@ -12,7 +12,7 @@
 import { AIService } from './ai-service';
 import { EnhancedContextManager } from './enhanced-context-manager';
 import { GameScenario } from './memory/context-optimizer';
-import { GameState } from '../simple-main';
+import { GameState } from '../core/interfaces/game';
 
 /**
  * Enhanced AI service configuration

@@ -7,7 +7,7 @@
 
 import { MemoryManager, MemoryType, MemoryItem } from './memory-manager';
 import { RelationshipTracker } from './relationship-tracker';
-import { GameState } from '../../simple-main';
+import { GameState } from '../../core/interfaces/game';
 
 /**
  * Context window section

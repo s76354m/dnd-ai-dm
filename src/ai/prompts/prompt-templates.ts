@@ -7,7 +7,6 @@
  */
 
 import { GameScenario } from '../memory/context-optimizer';
-import { GameState } from '../../simple-main';
 
 /**
  * Prompt template interface

@@ -7,7 +7,6 @@
  * to generate responses.
  */
 
-import { SimpleNPC } from '../simple-main';
 
 // Simple AI context to maintain continuity
 interface SimpleAIContext {

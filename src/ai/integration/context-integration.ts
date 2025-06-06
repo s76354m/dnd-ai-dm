@@ -8,7 +8,7 @@
 import { AIService } from '../ai-service-wrapper';
 import { EnhancedContextManager, EnhancedContextManagerConfig } from '../enhanced-context-manager';
 import { EnhancedAIService } from '../enhanced-ai-service';
-import { GameState } from '../../simple-main';
+import { GameState } from '../../core/interfaces/game';
 import { GameScenario } from '../memory/context-optimizer';
 
 /**
