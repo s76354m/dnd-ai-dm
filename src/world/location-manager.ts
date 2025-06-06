@@ -32,14 +32,27 @@ export async function describeLocation(
   }
   
   // Get NPCs present in the location
-  const npcsPresent = location.npcs
-    .map(npcId => {
-      if (typeof npcId === 'string') {
-        return gameState.npcs.get(npcId);
+  const npcsPresent: NPC[] = [];
+
+  if (Array.isArray(location.npcs)) {
+    for (const entry of location.npcs) {
+      if (typeof entry === 'string') {
+        const found = gameState.npcs?.get(entry);
+        if (found) {
+          npcsPresent.push(found);
+        }
+      } else {
+        npcsPresent.push(entry);
       }
-      return npcId;
-    })
-    .filter(npc => npc !== undefined) as NPC[];
+    }
+  } else if (location.npcs instanceof Map) {
+    location.npcs.forEach((_loc: string, npcId: string) => {
+      const found = gameState.npcs?.get(npcId);
+      if (found) {
+        npcsPresent.push(found);
+      }
+    });
+  }
   
   if (npcsPresent.length > 0) {
     description += 'Characters present:\n';
